@@ -19,7 +19,7 @@ export default function CurrencyRow(props) {
         autoFocus={autoFocus}
       />
       <select 
-      className='form-select text-bg-light p-3'
+      className='currency-select form-select text-bg-light p-3'
         value={selectedCurrency} 
         onChange={onChangeCurrency}
       >

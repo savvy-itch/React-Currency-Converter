@@ -10,6 +10,9 @@ h1 {
   margin: 0;
   margin-bottom: .5rem;
 }
+.currency-select {
+  padding-right: 2rem !important;
+}
 .equals {
   font-weight: bold;
   font-size: 2rem;
