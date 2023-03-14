@@ -15,6 +15,7 @@ function App() {
   // Register from which input to convert
   const [amountInFromCurrency, setAmountInFromCurrency] = useState(true);
   const [exchangeRate, setExchangeRate] = useState();
+  const [updateDate, setUpdateDate] = useState('');
   
   let toAmount, fromAmount;
   // if 'from' input has value 
@@ -32,6 +33,24 @@ function App() {
     fetch(BASE_URL)
       .then(response => response.json())
       .then(data => {
+        // sort data in alphabetical order
+        data = data.filter(elem => !elem.txt.includes('рубль') 
+          && !elem.txt.includes('Золото')
+          && !elem.txt.includes('Платина')
+          && !elem.txt.includes('Паладій')
+          && !elem.txt.includes('Срібло')
+          && !elem.txt.includes('СПЗ')
+        );
+        data = data.sort((a,b) => {
+          if (a.txt < b.txt) {
+            return -1;
+          } else if (a.txt > b.txt) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+        console.log(data);
         const options = data.map(el => el.txt);
         const firstCurrency = data.filter(
           d => d.txt === options[0]);
@@ -42,6 +61,7 @@ function App() {
         setToCurrency(options[1]);
         // set default rate
         setExchangeRate(firstCurrency[0].rate);
+        setUpdateDate(data[0].exchangedate);
       });
   }, []);
 
@@ -89,6 +109,7 @@ function App() {
         amount={toAmount}
         onChangeAmount={handleToAmountChange}
       />
+      <h6 className='text-white-50 fst-italic fw-light text-start'>Last update: {updateDate}</h6>
     </>
   );
 }
